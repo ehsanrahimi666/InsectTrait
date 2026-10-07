@@ -1,0 +1,35 @@
+test_that("plots draw without errors", {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off())
+  ex <- in_example_photos()
+  expect_null(in_plot_outline(ex$crop[1], ex$mask[1], main = "x"))
+  expect_null(in_plot_outline(ex$photo[1]))
+  res <- in_example_results()
+  drawn <- in_contact_sheet(res, ncol = 4)
+  expect_equal(nrow(drawn), 7)
+  v <- in_filter(in_validation, "default")
+  d <- in_plot_traits(v[v$order == "Lepidoptera", ], "C_mean")
+  expect_gt(nrow(d), 10)
+  r <- in_repeatability(v[v$keep, ], traits = c("L_mean", "C_mean"), boot = 5)
+  expect_equal(in_plot_repeatability(r), r[order(r$icc), ])
+})
+
+test_that("contact sheet can be written to a file", {
+  f <- tempfile(fileext = ".png")
+  in_contact_sheet(in_example_results(), ncol = 4, file = f)
+  expect_true(file.exists(f))
+  expect_gt(file.size(f), 1000)
+})
+
+test_that("summaries use circular means for hue", {
+  x <- data.frame(species = c("a", "a", "b"), hue_deg = c(350, 10, 90), L_mean = c(1, 3, 5),
+                  keep = TRUE)
+  s <- in_summarise(x, traits = c("hue_deg", "L_mean"))
+  expect_equal(s$n, c(2, 1))
+  expect_equal(s$hue_deg_mean[1] %% 360, 0, tolerance = 1e-8)
+  expect_equal(s$L_mean_mean, c(2, 5))
+  v <- in_filter(in_validation, "default")
+  s2 <- in_summarise(v, "order")
+  expect_equal(sum(s2$n), sum(v$keep))
+  expect_error(in_summarise(x, "nope"), "not found")
+})

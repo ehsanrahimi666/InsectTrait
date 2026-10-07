@@ -1,0 +1,52 @@
+Package: InsectTrait
+Type: Package
+Title: Colour, Pattern and Shape Traits of Insects from Photographs
+Version: 0.1.0
+Authors@R: c(
+    person("Ehsan", "Rahimi", email = "ehsanrahimi666@gmail.com",
+           role = c("aut", "cre")),
+    person("Chuleui", "Jung", email = "cjung@gknu.ac.kr", role = "aut"))
+Description: Extracts colour, pattern and shape traits of insects from field
+    photographs: single photos, folders of photos, folders sorted by species,
+    or photos found through the Global Biodiversity Information Facility
+    ('GBIF') and 'iNaturalist'. An optional 'Python' back end finds the insect
+    with 'Grounding DINO' in two passes, outlines it with 'Segment Anything'
+    2.1, screens each photo with a validated photo filter (usable photo, top or
+    side view, butterfly wing side, several insects) and computes 67 traits.
+    Core colour traits and outline quality metrics are also computed natively
+    in R. Further functions apply validated decision rules, check colour casts
+    and exposure, correct white balance, test trait stability under the
+    rotations and colour changes used to augment training images, estimate
+    photo-to-photo repeatability and invariance, and report a catalogue of
+    trait reliability. The methods were developed and validated for insects
+    only; they are not intended for birds or other animals.
+License: GPL (>= 3)
+URL: https://github.com/ehsanrahimi666/InsectTrait
+BugReports: https://github.com/ehsanrahimi666/InsectTrait/issues
+Depends:
+    R (>= 4.1.0)
+Imports:
+    curl,
+    graphics,
+    grDevices,
+    jpeg,
+    jsonlite,
+    png,
+    reticulate (>= 1.28),
+    stats,
+    tools,
+    utils
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+SystemRequirements: Optional Python (>= 3.9) with torch, transformers
+    (>= 4.45), ultralytics (>= 8.3) and open_clip_torch for the photo back
+    end; see in_install().
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-GB
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1

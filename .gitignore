@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+inst/doc
+doc
+Meta
+__pycache__/
+*.pyc
+*.pt
+*.tar.gz
+InsectTrait.Rcheck/

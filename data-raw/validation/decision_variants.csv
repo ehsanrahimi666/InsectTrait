@@ -1,0 +1,7 @@
+,kept,wrong outlines among kept,good outlines among kept,labelled usable among kept
+no filter,1.0,0.042,0.792,0.775
+outline QC (mask_ok),0.992,0.036,0.798,0.782
+outline QC + stability >= 0.8,0.785,0.029,0.828,0.798
+outline QC + photo filter (no stability),0.706,0.009,0.923,0.9
+outline QC + stability + photo filter,0.56,0.004,0.948,0.914
+... + top view only,0.404,0.005,0.943,0.928

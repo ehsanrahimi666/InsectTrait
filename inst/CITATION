@@ -1,0 +1,8 @@
+bibentry(
+  bibtype = "Manual",
+  title = "InsectTrait: Colour, Pattern and Shape Traits of Insects from Photographs",
+  author = c(person("Ehsan", "Rahimi"), person("Chuleui", "Jung")),
+  year = "2026",
+  note = "R package version 0.1.0",
+  url = "https://github.com/ehsanrahimi666/InsectTrait"
+)

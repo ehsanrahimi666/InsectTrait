@@ -1,0 +1,244 @@
+---
+title: "Insect traits from photographs with InsectTrait"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Insect traits from photographs with InsectTrait}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4.5)
+library(InsectTrait)
+```
+
+**InsectTrait** measures colour, pattern and shape traits of insects in field
+photographs. It was developed and validated on 780 'iNaturalist' photos of 48
+insect species (Coleoptera, Diptera, Hymenoptera and Lepidoptera). **It is for
+insects only**; birds, reptiles, plants and other organisms need their own
+validation.
+
+The package has two parts:
+
+* an optional 'Python' back end that finds and outlines the insect, screens the
+  photo and computes 67 traits (`in_process()`);
+* R functions that work without 'Python': core colour traits from a crop and its
+  outline, decision rules, reliability statistics, the trait catalogue, GBIF
+  search and plots.
+
+## 1. Example photos
+
+Seven CC0 or CC BY photos are shipped with the package, with their crops and
+outlines from the back end.
+
+```{r photos}
+ex <- in_example_photos()
+ex[, c("photo_id", "species", "order", "rights_holder")]
+```
+
+```{r outlines, fig.height = 3.2}
+op <- par(mfrow = c(1, 4))
+for (i in c(1, 2, 3, 4)) in_plot_outline(ex$crop[i], ex$mask[i], main = ex$species[i])
+par(op)
+```
+
+Photo credits: `r paste(in_attribution(ex[1:4, ]), collapse = "; ")`.
+
+## 2. Core traits in R
+
+`in_traits()` computes the outline quality metrics and nine core colour traits
+from a crop and its outline. The formulas follow the back end, so the values
+agree with it.
+
+```{r traits}
+tr <- in_traits(ex$crop, ex$mask)
+tr[, c("photo_id", "px", "mask_ok", "L_mean", "C_mean", "vap_wp", "dark_frac_otsu")]
+```
+
+## 3. Your own photos: one photo, a folder, or species folders
+
+A single photo or a folder can be passed straight to `in_process()`. When the
+photos are sorted into one sub-folder per species, `in_read_folder()` takes the
+species name from the folder name and `in_taxonomy()` adds the order and family
+from the GBIF backbone (and warns about names that are not insects).
+
+```{r folders}
+d <- file.path(tempdir(), "species_photos")
+for (i in 1:3) {
+  sp <- file.path(d, gsub(" ", "_", ex$species[i]))
+  dir.create(sp, recursive = TRUE, showWarnings = FALSE)
+  file.copy(ex$photo[i], file.path(sp, basename(ex$photo[i])))
+}
+in_read_folder(d)[, c("photo_id", "species", "file")]
+```
+
+```{r folders2, eval = FALSE}
+ph  <- in_taxonomy(in_read_folder("PATH_TO_SPECIES_FOLDERS"))
+res <- in_process(ph, out_dir = "PATH_TO_OUTPUT_FOLDER")
+res1 <- in_process("PATH_TO_ONE_PHOTO.jpg", out_dir = "PATH_TO_OUTPUT_FOLDER")
+```
+
+## 4. The back end
+
+```{r backend, eval = FALSE}
+in_install()        # once; downloads PyTorch and the model code
+in_use_backend()    # at the start of each session
+res <- in_process(ex$photo, out_dir = "PATH_TO_OUTPUT_FOLDER")
+```
+
+For each photo the back end:
+
+1. runs 'Grounding DINO' with the prompt "insect" on the whole photo to find the
+   main insect, count other insects and flag insects cut by the frame;
+2. takes a square crop at native resolution;
+3. runs 'Grounding DINO' again inside the crop (two-stage detection);
+4. outlines the insect with 'SAM' 2.1, prompted with the box and two jittered
+   boxes (outline stability);
+5. computes quality metrics and the photo filter: probabilities that the photo
+   is usable, shows a top view, shows the upper wing side (Lepidoptera), shows
+   the whole insect and is sharp;
+6. computes 10 core and 57 extended traits.
+
+The results for the example photos are shipped:
+
+```{r results}
+res <- in_example_results()
+res
+```
+
+## 5. Keeping usable photos
+
+Many field photos show the insect from the side, with closed wings, partly
+hidden in a flower, blurred, or together with other insects. `in_filter()`
+applies one of the decision rules that were compared on 480 benchmark photos
+with visual labels and outline ratings:
+
+```{r rules}
+b <- in_validation[in_validation$role == "benchmark", ]
+t(sapply(c("qc", "default", "strict", "top_view"), function(r) {
+  k <- in_filter(b, r)$keep
+  c(kept = mean(k), wrong_outlines = mean(b$outline_rating[k] == "wrong"))
+}))
+```
+
+The default rule (outline QC, a single insect and `p_usable_any >= 0.5`) kept
+71% of photos and left 0.9% wrong outlines. Views are reported, not mixed
+silently: use `view == "top"` or the `"top_view"` rule when pattern or shape
+traits must be compared between photos.
+
+```{r decisions, fig.height = 3}
+summary(res)
+plot(res)
+```
+
+```{r sheet, fig.height = 4}
+in_contact_sheet(res, ncol = 4)
+```
+
+## 6. Which traits can be trusted?
+
+The trait catalogue records, for each trait, its repeatability between two
+photos of the same insect, its invariance to camera changes and the smallest
+insect size at which it stays stable.
+
+```{r catalogue}
+table(in_catalogue$family, in_catalogue$verdict)
+in_trait_info(verdict = c("use with care", "not reliable"))[, c("trait", "verdict", "reason")]
+```
+
+Hue angle is not reliable: for dull insects a small white-balance shift moves
+the angle a lot. The chromaticity traits (`a_mean`, `b_mean`, `chrom_r`, ...)
+are reliable alternatives.
+
+Repeatability can be estimated for your own data with several photos per
+insect:
+
+```{r repeat, fig.height = 3.5}
+v <- in_filter(in_validation, "default")
+r <- in_repeatability(v[v$keep, ], traits = c("L_mean", "L_sd", "C_mean", "hue_conc",
+                      "vap_wp", "darkness_cw", "dark_frac_otsu", "L_entropy"), boot = 100)
+r
+in_plot_repeatability(r)
+```
+
+Invariance to simulated camera changes uses fixed outlines:
+
+```{r invariance}
+inv <- in_invariance(ex$crop, ex$mask, types = c("white_balance", "exposure", "jpeg"),
+                     rungs = c(64, 128), min_n = 5)
+round(inv, 2)
+```
+
+With seven photos these estimates are very imprecise; the catalogue values come
+from 100 photos.
+
+## 7. Colour checks and augmentation
+
+`in_colour_check()` estimates the colour of the light from near-neutral
+background pixels and flags casts, clipped highlights and under-exposure.
+`in_augment()` applies the transformations used to augment training images
+(quarter turns, mirroring, brightness, contrast, saturation and hue jitter) and
+the camera changes of the validation; `in_augment_check()` reports how far each
+core trait moves, relative to the usual difference between photos.
+
+```{r colour}
+in_colour_check(ex$crop, ex$mask)[, c("photo_id", "neutral", "cast", "clip", "issues")]
+chk <- in_augment_check(ex$crop[1], ex$mask[1], types = c("rotate90", "flip", "hue", "saturation"))
+chk[chk$trait %in% c("L_mean", "C_mean", "dark_frac_otsu"), c("type", "trait", "rel_change")]
+```
+
+The same check on 100 validation photos (`in_benchmark$augmentation`) shows
+that quarter turns and mirroring leave the core traits unchanged, whereas
+colour jitter of the size used in training moves lightness, contrast-dependent
+and chroma traits by a quarter to almost half of the usual difference between
+photos. Colour jitter is useful for training models that should ignore colour,
+but traits should be measured on unmodified photos.
+
+```{r augment-eval}
+aug <- in_benchmark$augmentation
+round(xtabs(median_rel_change ~ type + trait, aug), 2)
+```
+
+White-balance correction is available
+(`in_traits(..., white_balance = "gray_pixels")`, `in_process(..., white_balance = ...)`)
+but off by default. In the 111 validation pairs that passed the default rule,
+no method improved repeatability consistently (`in_benchmark$white_balance`):
+grey world raised the repeatability of `C_mean` but shifted chroma and hue
+strongly, and grey pixels lowered the repeatability of `hue_deg`. Use the
+colour check to flag or exclude photos with strong casts, and corrected traits
+as a sensitivity analysis.
+
+```{r wb-eval}
+wb <- in_benchmark$white_balance
+round(xtabs(icc ~ trait + method, wb), 2)
+```
+
+## 8. Photos from GBIF and iNaturalist
+
+```{r gbif, eval = FALSE}
+ph <- in_gbif_photos("Aglais io", n = 50, country = "KR")
+# or directly from iNaturalist (research grade, CC0 and CC BY photos)
+ph <- in_inat_photos("Aglais io", n = 50)
+ph <- in_download_photos(ph, dir = "PATH_TO_PHOTO_FOLDER")
+res <- in_process(ph, out_dir = "PATH_TO_OUTPUT_FOLDER")
+writeLines(in_attribution(ph), "PATH_TO_PHOTO_FOLDER/attribution.txt")
+```
+
+`in_gbif_photos()` and `in_inat_photos()` stop with an error for taxa outside the class Insecta.
+
+## 9. Summaries by species
+
+```{r summary, fig.height = 4}
+s <- in_summarise(v, by = "species", traits = c("L_mean", "C_mean", "dark_frac_otsu"))
+head(s)
+in_plot_traits(v[v$order == "Hymenoptera", ], "dark_frac_otsu")
+```
+
+## Limitations
+
+* The visual labels and outline ratings behind the decision rules were not
+  compared with independent human labels (see the package article).
+* The two photos of a pair come from the same observation; repeatability across
+  days, observers and cameras will be lower.
+* Validation covered 48 mostly European pollinator species from 'iNaturalist'.
+  Other insects and regions are untested.

@@ -1,0 +1,17 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.github$
+^data-raw$
+^paper$
+^python-tests$
+^README\.Rmd$
+^cran-comments\.md$
+^CITATION\.cff$
+^LICENSE\.md$
+^upload_to_github\.R$
+^upload_to_github\.cmd$
+^\.gitignore$
+^doc$
+^Meta$
+__pycache__
+\.pyc$

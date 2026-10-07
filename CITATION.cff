@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "InsectTrait: Colour, Pattern and Shape Traits of Insects from Photographs"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Rahimi
+    given-names: Ehsan
+  - family-names: Jung
+    given-names: Chuleui
+version: 0.1.0
+license: GPL-3.0-or-later
+repository-code: "https://github.com/ehsanrahimi666/InsectTrait"
+abstract: >-
+  An R package with an optional Python back end that detects and outlines
+  insects in field photographs, screens photos with a validated photo filter
+  and computes colour, pattern and shape traits with a catalogue of their
+  reliability. Validated for insects only.

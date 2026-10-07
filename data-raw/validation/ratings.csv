@@ -1,0 +1,481 @@
+lab_idx,seg_rating,seg_note
+14,G,
+43,G,
+48,G,
+53,G,
+57,G,
+58,G,
+66,G,
+80,B,segmented shadow not the pinned specimen
+96,G,
+113,B,two insects merged
+116,B,petal included
+130,G,
+134,G,
+145,G,
+202,G,
+205,G,
+225,M,blurry; bud partly included
+231,M,blurry
+251,G,
+271,M,
+280,M,
+288,G,
+296,G,
+312,G,
+313,G,
+316,G,
+346,G,
+366,G,
+368,G,
+369,G,
+370,G,
+387,G,
+394,M,motion blur
+397,G,
+398,M,motion blur wings
+409,G,
+422,G,
+431,G,
+433,G,
+434,G,
+6,G,
+13,G,
+16,M,flower parts included
+31,M,two ladybirds merged
+34,G,
+35,G,
+49,G,
+64,G,
+65,G,
+76,G,
+87,G,
+93,G,
+133,M,blurry
+155,G,
+160,G,
+166,G,
+178,M,blurry
+183,G,
+185,G,
+190,G,
+191,G,
+236,G,
+240,G,
+241,G,
+248,M,finger included
+260,B,many bees
+270,B,no clear insect
+301,G,
+319,M,blurry and hidden
+342,G,
+362,B,flowers included
+371,B,blurry hovering
+391,B,no insect visible
+399,M,motion blur
+400,G,
+424,G,
+440,G,
+442,M,partly hidden
+445,G,
+451,G,
+3,G,
+5,G,
+15,G,
+17,G,
+18,G,
+54,G,
+63,G,
+69,G,
+71,G,
+75,G,
+84,G,
+92,G,
+102,G,
+138,G,
+152,G,
+157,G,
+196,G,
+203,G,
+208,G,
+229,M,blurry; finger
+252,G,
+257,G,
+268,G,
+269,G,
+278,M,blurry
+295,M,leaf included
+298,M,blurry
+323,G,
+335,G,
+336,G,
+339,G,
+350,G,
+363,M,blurry
+383,G,
+405,M,flower in front
+407,G,
+426,G,
+443,M,blurry and partly hidden
+459,G,
+464,M,second insect touching
+8,G,
+42,G,
+106,G,
+112,G,
+117,G,
+118,G,
+127,M,blurry
+171,G,
+174,G,
+209,G,
+211,G,
+216,G,
+222,G,
+226,G,
+230,M,shadow included
+238,G,
+242,M,blurry
+264,G,
+284,G,
+294,B,background leaf included
+306,G,
+309,G,
+317,G,
+331,G,
+338,M,wire
+341,M,blurry
+347,G,
+349,M,stamens included
+382,G,
+396,G,
+420,G,
+421,G,
+427,G,
+448,G,
+454,G,
+466,G,
+467,G,
+469,G,
+470,G,
+473,G,
+7,M,blurry; shadow
+28,G,
+30,G,
+50,G,
+60,G,
+81,B,wrong insect (a fly elsewhere in the photo)
+86,G,
+97,G,
+98,M,flowers
+99,G,
+100,G,
+104,G,
+107,G,
+121,G,
+123,G,
+149,M,blurry
+154,G,
+159,G,
+170,G,
+173,M,flowers included
+176,B,flowers; insect hidden
+179,G,
+188,G,
+199,G,
+213,G,
+220,G,
+235,M,flowers
+254,G,
+262,G,
+266,M,second bee
+315,G,
+325,G,
+330,G,
+343,G,
+354,G,
+385,G,
+390,G,
+392,M,motion blur
+418,G,
+435,G,
+19,G,
+40,G,
+41,G,
+44,G,
+67,B,flower included (head hidden)
+74,G,
+88,G,
+103,G,
+108,G,
+114,G,
+131,G,
+148,G,
+161,G,
+186,G,
+187,G,
+200,G,
+221,G,
+224,G,
+246,G,
+258,G,
+263,M,insect barely visible
+267,G,
+272,B,no insect visible
+274,M,overexposed
+286,G,
+291,M,blurry
+324,G,
+359,M,flower included
+375,G,larva
+379,M,motion blur
+414,G,
+437,G,
+438,G,
+441,G,
+450,G,
+452,M,partly hidden
+458,G,
+462,G,
+475,G,
+477,G,
+1,G,
+2,G,
+12,M,held in fingers
+29,G,
+33,G,
+38,G,
+46,G,
+52,G,
+61,G,
+77,G,
+110,G,
+120,G,
+143,G,
+146,G,
+163,M,litter included
+192,M,blurry
+194,M,blurry
+195,G,
+198,G,
+223,G,
+228,G,
+239,G,
+244,G,
+249,G,
+259,M,blurry
+279,M,dark and partly hidden
+282,M,partly hidden
+297,G,
+303,G,
+322,G,
+333,M,blurry
+340,B,insect in nest hole; hole outlined
+357,G,
+367,G,
+384,G,
+406,G,
+410,G,
+412,G,
+432,G,
+444,G,
+9,G,
+21,B,leaf included
+45,G,
+68,M,flower included
+79,G,
+94,G,
+101,G,
+105,M,partly hidden
+115,G,
+122,G,
+124,G,
+129,G,
+135,G,
+151,G,
+158,M,odd extension
+180,G,
+189,G,
+204,M,wing blur
+214,G,
+232,G,
+253,G,
+281,M,flower included
+285,G,
+293,G,
+299,G,
+302,G,
+304,G,
+314,G,
+345,G,
+356,G,
+358,G,
+360,G,
+361,G,
+365,G,
+389,G,
+423,M,blurry flight
+447,M,blurry
+460,G,
+463,G,
+465,G,
+47,M,blurry
+51,G,
+72,M,cut off by frame
+85,G,
+90,M,second beetle included
+128,G,
+139,G,
+147,M,leaf part included
+150,G,
+162,G,
+164,G,
+193,G,
+206,G,
+207,G,
+212,G,
+215,G,
+217,G,
+234,M,flowers included
+237,G,
+245,G,
+250,G,
+255,G,
+261,G,
+283,G,
+300,G,
+310,G,
+344,B,nest hole outlined
+348,G,
+351,M,blurry
+352,G,
+376,M,two moths
+378,G,larva
+393,G,
+416,G,
+428,G,
+436,M,mating pair
+461,G,
+472,G,
+474,G,
+478,G,
+0,G,
+25,G,
+55,G,
+73,G,
+82,G,
+83,G,
+89,G,
+95,G,
+111,M,flower stems included
+137,M,blurry flight
+140,G,
+142,G,
+153,G,
+165,M,background object included
+168,G,
+177,G,
+182,G,
+201,G,
+218,G,
+219,G,
+227,G,
+277,G,
+320,G,
+327,G,
+329,G,
+332,G,
+337,G,
+355,G,
+373,G,
+377,G,
+395,B,flowers included (hovering blur)
+401,G,
+403,G,
+413,M,blurry
+417,G,
+419,G,
+425,G,
+430,G,
+446,G,
+453,G,
+10,G,
+26,G,
+32,G,
+37,G,
+39,G,
+59,G,
+78,G,
+91,M,flower disc included
+109,M,flower disc included
+119,G,
+125,G,
+136,G,
+141,G,
+175,G,
+197,B,insect barely visible
+210,G,
+243,G,
+247,M,partly hidden
+256,G,
+265,G,
+273,B,flower interior outlined
+276,M,blurry
+287,G,
+290,M,flowers included
+292,G,
+305,M,blurry and hidden
+307,G,
+308,G,
+311,M,ground included
+326,G,
+364,M,blurry; flowers
+372,G,
+380,G,
+381,G,
+411,G,
+415,G,
+439,G,
+456,M,partly hidden
+457,G,
+468,G,
+4,G,
+11,G,
+20,G,
+22,G,
+23,M,partly hidden
+24,G,
+27,G,
+36,G,
+56,G,
+62,G,
+70,M,mating pair; blurry
+126,G,
+132,G,
+144,G,
+156,G,
+167,G,
+169,G,
+172,G,
+181,G,
+184,G,
+233,M,blurry
+275,B,flower outlined; insect not clear
+289,G,
+318,G,
+321,G,
+328,G,
+334,G,
+353,G,
+374,G,
+386,G,
+388,G,
+402,G,
+404,G,
+408,G,
+429,G,
+449,G,
+455,G,
+471,G,
+476,G,
+479,G,
